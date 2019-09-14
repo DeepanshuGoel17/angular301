@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 // tslint:disable-next-line:max-line-length
 import { SeatReservationModalComponent } from '../../../../shared/components/modals/seat-reservation-modal/seat-reservation-modal.component';
@@ -10,7 +10,8 @@ import { PreBookingComponent } from '../../../../shared/components/modals/pre-bo
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.scss']
+  styleUrls: ['./movie-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieCardComponent implements OnInit, OnChanges {
   @Input()
@@ -22,7 +23,6 @@ export class MovieCardComponent implements OnInit, OnChanges {
 
   imagesPath = TMDB_URLS.IMAGE_URL;
   castCrewPath = TMDB_URLS.CAST_CREW_SMALL;
-  movieName = 'Robot 2.O';
   dialogResult;
   rating = 4.7;
   totalReviews = 51;
@@ -64,6 +64,13 @@ export class MovieCardComponent implements OnInit, OnChanges {
     // dialogRef.afterClosed().subscribe(() => {});
   }
 
+  trackThreater(index, theater) {
+    if (theater) {
+      return theater.tid;
+    } else {
+      return -1;
+    }
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(SeatReservationModalComponent, {
       width: sessionStorage.getItem('authDetails') ? window.innerWidth + 'px' : 'auto',
@@ -76,11 +83,6 @@ export class MovieCardComponent implements OnInit, OnChanges {
     bookingInstance.movieTitle = this.movie.title;
     bookingInstance.screen = this.selectedTheater && this.selectedTheater.name;
     bookingInstance.time = this.selectedTime;
-    bookingInstance.movieList = this.movie;
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog closed: ${result}`);
-    //   //  this.dialogResult = result;
-    // });
   }
 
   trackCastandCrew(index, cast) {

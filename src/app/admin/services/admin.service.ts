@@ -12,8 +12,7 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   newTheater(data) {
-    //need to cover the http request inside the function
-    let newTheaters =[], newObject;
+    let newTheaters = [], newObject;
     this.http.get(THEATERS_URL).subscribe((value) => {
       console.log(value);
       newObject = value;

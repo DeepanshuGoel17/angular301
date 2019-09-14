@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { StoreFeatureModule } from '@ngrx/store';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { SeatReservationModalComponent } from '../../../shared/components/modals/seat-reservation-modal/seat-reservation-modal.component';
@@ -12,7 +12,8 @@ import { PreBookingComponent } from '../../../shared/components/modals/pre-booki
 @Component({
   selector: 'app-movie-page',
   templateUrl: './movie-page.component.html',
-  styleUrls: ['./movie-page.component.scss']
+  styleUrls: ['./movie-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviePageComponent implements OnInit, OnChanges {
   imagesPath = TMDB_URLS.IMAGE_URL;

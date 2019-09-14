@@ -10,7 +10,6 @@ import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
 import { ProfileComponent } from './profile/profile.component';
@@ -37,7 +36,6 @@ import { SharedModule } from './shared/shared.module';
     ServiceWorkerModule.register('/ngsw-worker.js', {
       enabled: environment.production
     }),
-    MaterialModule,
     CoreModule,
     AdminModule,
     SharedModule

@@ -19,11 +19,15 @@
 .mat-tab-label-inactive {
   color: rgb(248, 241, 241);
 }
+::ng-deep .mat-tab-label-content{
+  color:#ffffff;
+}
 
 .dropDowns {
   background-color: rgb(56, 146, 206);
   height: 30px;
   width: 100%;
+  z-index:100;
   position: fixed;
 }
 

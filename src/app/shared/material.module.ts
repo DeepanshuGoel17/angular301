@@ -4,7 +4,6 @@ import {
   MatButtonModule,
   MatIconModule,
   MatGridListModule,
-  MatMenuModule,
   MatInputModule,
   MatSelectModule,
   MatNativeDateModule,
@@ -16,6 +15,7 @@ import {
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
+import { MatMenuModule} from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -32,7 +32,6 @@ const materialModules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatDialogModule,
-  MatSnackBarModule,
   ScrollingModule,
   MatSnackBarModule,
   MatTableModule,

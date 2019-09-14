@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterContentChecked, DoCheck } from '@angular/core';
+import { Component, OnInit, Input, AfterContentChecked, DoCheck, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 // import { MoviePipePipe } from './../../pipes/movie-pipe.pipe';
@@ -12,7 +12,8 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-s-dialog-cards',
   templateUrl: './s-dialog-cards.component.html',
-  styleUrls: ['./s-dialog-cards.component.scss']
+  styleUrls: ['./s-dialog-cards.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SDialogCardsComponent implements AfterContentChecked, DoCheck, OnInit {
   @Input() movieList; // movie seperated by language

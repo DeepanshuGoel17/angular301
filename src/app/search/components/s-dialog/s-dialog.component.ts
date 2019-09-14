@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store, State } from '@ngrx/store';
 import * as MovieState from '../../../reducers/index';
 import { FormControl } from '@angular/forms';
@@ -16,7 +16,8 @@ import { HostBinding } from '@angular/core';
 @Component({
   selector: 'app-s-dialog',
   templateUrl: './s-dialog.component.html',
-  styleUrls: ['./s-dialog.component.scss']
+  styleUrls: ['./s-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SDialogComponent implements OnInit, OnDestroy {
   @HostBinding('class.app-s-dialog') bgColor = true;

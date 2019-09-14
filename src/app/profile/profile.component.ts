@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<UserState.State>,
     private matDialog: MatDialog
-  ) { }
+  ) {}
 
   // after clicking submit button adding preference option is here
   public submitPreferences() {
@@ -63,6 +63,13 @@ export class ProfileComponent implements OnInit {
       this.theaterList = Object.values(result);
       console.log('updated', result, this.theaterList);
     });
+  }
+  trackThreater(index, theater) {
+    if (theater) {
+      return theater.tid;
+    } else {
+      return -1;
+    }
   }
   sucess() {
     this.newPreference.reset();

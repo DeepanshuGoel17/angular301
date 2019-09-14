@@ -4,6 +4,8 @@ import * as MovieState from '../../../reducers/index';
 import * as UserState from '../../../reducers/index';
 
 import { HomeService } from '../../services/home.service';
+import { Observable } from 'rxjs';
+import { Theater } from '../../models/theater.model';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,7 +16,7 @@ export class HomeComponent implements OnInit {
   nowPlayingMoviesList: any = [];
   upcomingMoviesList: any = [];
   genresList: any = [];
-  theaterList: any = [];
+  theaterList: Observable<Theater[]>;
   userPreference: any = [];
 
   constructor(
@@ -29,9 +31,10 @@ export class HomeComponent implements OnInit {
     this.store.select(MovieState.upcomingMovieSelector).subscribe(result => {
       this.upcomingMoviesList = result;
     });
-    this.store.select(MovieState.theaterList).subscribe(result => {
+    this.theaterList = this.store.select(MovieState.theaterList);
+    /* .subscribe(result => {
       this.theaterList = Object.values(result);
-    });
+    }); */
     this.userStore.select(UserState.userSelector).subscribe(result => {
       this.userPreference = result.preference;
     });

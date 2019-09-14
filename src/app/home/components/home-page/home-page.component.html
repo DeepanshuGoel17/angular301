@@ -12,7 +12,7 @@
         <ng-template matTabContent class="movieList">
 
           <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="space-evenly center" fxLayoutGap="2%">
-            <ng-container *ngFor="let movie of upcomingList">
+            <ng-container *ngFor="let movie of upcomingList;trackBy:trackMovie">
               <app-movie-card class=" seach-movies-cards" [movie]="movie" [theaterList]="theaterList"
                 [category]="'nowPlaying'">
               </app-movie-card>
@@ -21,11 +21,11 @@
 
         </ng-template>
       </mat-tab>
-      <mat-tab label="Next Change" class="labelFont">
+      <mat-tab label="Next Change" class="labelFont color-white">
         <ng-template matTabContent>
 
           <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="space-evenly center">
-            <ng-container *ngFor="let movie of moviesList">
+            <ng-container *ngFor="let movie of moviesList;trackBy:trackMovie">
               <app-movie-card class="seach-movies-cards" [movie]="movie" [theaterList]="theaterList"
                 [category]="'upComing'"></app-movie-card>
             </ng-container>
