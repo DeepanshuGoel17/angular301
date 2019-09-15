@@ -3,12 +3,9 @@ import {
   OnInit,
   Input,
   ChangeDetectionStrategy,
-  ViewChild,
   EventEmitter,
   Output,
-  ViewEncapsulation
 } from '@angular/core';
-
 import { HomeService } from '../../services/home.service';
 
 @Component({

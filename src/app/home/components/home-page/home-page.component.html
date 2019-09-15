@@ -12,11 +12,17 @@
         <ng-template matTabContent class="movieList">
 
           <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="space-evenly center" fxLayoutGap="2%">
-            <ng-container *ngFor="let movie of upcomingList;trackBy:trackMovie">
+              <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll-viewport">
+                  <ng-container *cdkVirtualFor="let movie of upcomingList;trackBy:trackMovie" >
+                    <app-movie-card class=" seach-movies-cards" [movie]="movie" [theaterList]="theaterList"
+                    [category]="'nowPlaying'">
+                  </app-movie-card></ng-container>
+                </cdk-virtual-scroll-viewport>
+            <!-- <ng-container *ngFor="let movie of upcomingList;trackBy:trackMovie">
               <app-movie-card class=" seach-movies-cards" [movie]="movie" [theaterList]="theaterList"
                 [category]="'nowPlaying'">
               </app-movie-card>
-            </ng-container>
+            </ng-container> -->
           </div>
 
         </ng-template>
@@ -25,10 +31,16 @@
         <ng-template matTabContent>
 
           <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="space-evenly center">
-            <ng-container *ngFor="let movie of moviesList;trackBy:trackMovie">
+              <cdk-virtual-scroll-viewport >
+                  <ng-container *cdkVirtualFor="let movie of moviesList;trackBy:trackMovie" class="virtual-scroll-viewport">
+                      <app-movie-card class="seach-movies-cards" [movie]="movie" [theaterList]="theaterList"
+                      [category]="'upComing'"></app-movie-card>
+                    </ng-container>
+                </cdk-virtual-scroll-viewport>
+            <!-- <ng-container *ngFor="let movie of moviesList;trackBy:trackMovie">
               <app-movie-card class="seach-movies-cards" [movie]="movie" [theaterList]="theaterList"
                 [category]="'upComing'"></app-movie-card>
-            </ng-container>
+            </ng-container> -->
           </div>
 
         </ng-template>

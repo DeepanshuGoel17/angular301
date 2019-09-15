@@ -13,3 +13,9 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   font-display: auto;
 }
+.cdk-virtual-scroll-content-wrapper {
+  display: flex;
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
