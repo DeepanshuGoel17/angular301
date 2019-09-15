@@ -14,7 +14,7 @@
       "updateMode": "freshness",
       "resources": {
         "files": ["/assets/**"],
-        "urls": ["https://api.themoviedb.org/**"]
+        "urls": ["https://api.themoviedb.org/**", "https://image.tmdb.org/**"]
       }
     }
   ],

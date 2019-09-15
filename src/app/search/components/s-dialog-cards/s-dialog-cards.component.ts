@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 // import { MoviePipePipe } from './../../pipes/movie-pipe.pipe';
 import { HomeFilterPipe } from '../../../shared/pipes/home-filter.pipe';
 import { SortMoviePipe } from '../../../shared/pipes/sort-movie.pipe';
+import {SortNamePipe} from '../../../shared/pipes/sort-name.pipe';
 import * as UserState from '../../../reducers/index';
 import { Store } from '@ngrx/store';
 
@@ -20,6 +21,7 @@ export class SDialogCardsComponent implements AfterContentChecked, DoCheck, OnIn
   @Input() movieFilter; // genre
   @Input() languageList; // list of languages
   @Input() selectedLanguage; // user language selection
+  @Input() movieSort;
   userPreference: any = [];
 
   // movieList DS

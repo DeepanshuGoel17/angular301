@@ -17,23 +17,27 @@ export const initialMovieState: MoviesState = {
 export function moviesReducer(state = initialMovieState, action: MovieActionTypes) {
     switch (action.type) {
         case EMovieActionTypes.SET_NOW_PLAYING_MOVIES: {
-            // const objOfMovies = action.payload.reduce((o, movie) => ({ ...o, [movie.id]: movie }), {});
-            // const newMovies: { [key: number]: Movie } = { ...state.nowPlayingMovies, ...objOfMovies };
-            const newNowPlayingMovies: Movie[] = [...state.nowPlayingMovies];
-            newNowPlayingMovies.push(...action.payload);
+            const objOfMovies = action.payload
+            .reduce((o, movie) => (
+                { ...o, [movie.id]: movie }
+                ), {});
+                const preMovies = state.nowPlayingMovies
+                .reduce((o, movie) => (
+                    { ...o, [movie.id]: movie }
+                    ), {});
+            const newMovies: { [key: number]: Movie } = { ...preMovies, ...objOfMovies };
             return {
                 ...state,
-                nowPlayingMovies: newNowPlayingMovies
+                nowPlayingMovies: Object.values(newMovies)
             };
         }
         case EMovieActionTypes.SET_UPCOMING_MOVIES: {
-            // const objOfMovies = action.payload.reduce((o, movie) => ({ ...o, [movie.id]: movie }), {});
-            // const newUpcomingMovies: { [key: number]: Movie } = { ...state.upcomingMovies, ...objOfMovies };
-            const newUpcomingMovies: Movie[] = [...state.upcomingMovies];
-            newUpcomingMovies.push(...action.payload);
+            const objOfMovies = action.payload.reduce((o, movie) => ({ ...o, [movie.id]: movie }), {});
+            const preUpcoming = state.upcomingMovies.reduce((o, movie) => ({ ...o, [movie.id]: movie }), {});
+            const newUpcomingMovies: { [key: number]: Movie } = { ...preUpcoming, ...objOfMovies };
             return {
                 ...state,
-                upcomingMovies: newUpcomingMovies
+                upcomingMovies: Object.values(newUpcomingMovies)
             };
         }
         case EMovieActionTypes.SET_CAST_AND_CREW: {

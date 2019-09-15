@@ -8,8 +8,9 @@
 
     </mat-form-field>
   </div>
-
+  
   <div class="dialog-dropdown" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="1%">
+    <button (click)= "sortList()">Sort On Name</button>
     <mat-form-field>
       <select [(ngModel)]="selectedLanguage" matNativeControl placeholder="Language">
         <option *ngFor='let language of movieObjArray' value="{{language.code}}"> {{language.key}}</option>
@@ -32,7 +33,9 @@
 
 
   <app-s-dialog-cards style="min-height: 100vh; min-width: 95vw" [movieList]="movieObjArray"
-    [movieFilter]="movieFilterObj" [languageList]="languageList" [selectedLanguage]="selectedLanguage">
+    [movieFilter]="movieFilterObj" 
+    [movieSort] = "movieSortObj"
+    [languageList]="languageList" [selectedLanguage]="selectedLanguage">
   </app-s-dialog-cards>
 
 
