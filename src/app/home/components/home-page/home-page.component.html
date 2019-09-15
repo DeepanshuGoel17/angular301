@@ -13,7 +13,7 @@
 
           <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="space-evenly center" fxLayoutGap="2%">
               <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll-viewport">
-                  <ng-container *cdkVirtualFor="let movie of upcomingList;trackBy:trackMovie" >
+                  <ng-container *cdkVirtualFor="let movie of moviesList;trackBy:trackMovie" >
                     <app-movie-card class=" seach-movies-cards" [movie]="movie" [theaterList]="theaterList"
                     [category]="'nowPlaying'">
                   </app-movie-card></ng-container>
@@ -32,7 +32,7 @@
 
           <div class="cards-container" fxLayout="row wrap" fxLayoutAlign="space-evenly center">
               <cdk-virtual-scroll-viewport >
-                  <ng-container *cdkVirtualFor="let movie of moviesList;trackBy:trackMovie" class="virtual-scroll-viewport">
+                  <ng-container *cdkVirtualFor="let movie of upcomingList;trackBy:trackMovie" class="virtual-scroll-viewport">
                       <app-movie-card class="seach-movies-cards" [movie]="movie" [theaterList]="theaterList"
                       [category]="'upComing'"></app-movie-card>
                     </ng-container>

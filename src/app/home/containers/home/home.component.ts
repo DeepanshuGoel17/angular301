@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getNewSetofNowPlayingMovies(1);
     this.store.select(MovieState.nowPlayingMoviesSelector).subscribe(result => (this.nowPlayingMoviesList = result));
     this.store.select(MovieState.upcomingMovieSelector).subscribe(result => {
       this.upcomingMoviesList = result;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as MovieState from '../../reducers/index';
 import { SetNowPlayingMovies, SetUpcomingMovies, SetCastAndCrew, SetTheaters } from '../store/actions/home.action';
@@ -8,6 +8,7 @@ import { Movie } from '../models/movie.model';
 import { BASE_URL, JSON_SERVER_URLS, TMDB_URLS } from 'src/app/shared/config';
 import { environment } from '../../../environments/environment';
 import { SetUser } from 'src/app/core/store/action/userDetails.action';
+import { catchError, concatMap, map, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +21,7 @@ export class HomeService {
   constructor(private http: HttpClient, private store: Store<MovieState.State>) {}
 
   getNowshowing(page = 1) {
-    this.http.get<Movie[]>(this.nowPlayingMoviesUrl + page).subscribe(
+      this.http.get<Movie[]>(this.nowPlayingMoviesUrl + page).subscribe(
       (movies: Movie[]) => {
         movies['results'].forEach(element => {
           const getCreditsUrl =
@@ -38,6 +39,27 @@ export class HomeService {
         console.error(error);
       }
     );
+
+    // this.http.get<Movie[]>(this.nowPlayingMoviesUrl + page).pipe(
+    //   map((movies: Movie[]) => {
+    //     movies['results'].forEach(element => {
+    //     console.log(JSON.parse(JSON.stringify(movies)));
+
+    //       const getCreditsUrl =
+    //         BASE_URL.TMDB_API + TMDB_URLS.GET_CREDITS + element.id + '/credits?' + environment.API_KEY;
+
+    //       this.http.get(getCreditsUrl).subscribe(res => {
+    //         element.casts = res['cast'].splice(0, 5);
+    //         element.crews = res['crew'].splice(0, 5);
+    //       });
+    //     });
+    //   }),
+      // tap((movies: Movie[]) => {
+      //   this.store.dispatch(new SetNowPlayingMovies(movies['results']));
+      //   console.log(movies);
+
+      // })
+    // );
   }
 
   getUpcomingMovies(page = 1) {
@@ -62,14 +84,12 @@ export class HomeService {
   }
 
   getGenres() {
-    console.log('geners', this.genres);
     return this.genres;
   }
 
   fetchGenres() {
     this.http.get(this.genresUrl).subscribe(res => {
       this.genres = res['genres'];
-      console.log(res, this.genres);
     });
   }
   getCastAndCrew(movies: Movie[]) {
@@ -97,18 +117,46 @@ export class HomeService {
     let objectRef, currentUserData;
     this.http.get(environment.JSONSERVER + JSON_SERVER_URLS.USER_DETAILS).subscribe(res => {
       objectRef = res;
-      console.log(newPreference, currentUserId, res['users']);
       res['users'].forEach(user => {
         if (user.uid === currentUserId) {
           user.preferences = newPreference;
           currentUserData = user;
-          console.log(user);
         }
       });
       this.http.put(environment.JSONSERVER + JSON_SERVER_URLS.USER_DETAILS, objectRef).subscribe(resp => {
-        console.log(resp);
         this.store.dispatch(new SetUser(currentUserData));
       });
     });
+
+    this.http
+      .get(environment.JSONSERVER + JSON_SERVER_URLS.USER_DETAILS)
+      .pipe(
+        concatMap(res => {
+          objectRef = res;
+          res['users'].forEach(user => {
+            if (user.uid === currentUserId) {
+              user.preferences = newPreference;
+              currentUserData = user;
+            }
+          });
+          return this.http.put(environment.JSONSERVER + JSON_SERVER_URLS.USER_DETAILS, objectRef);
+        }),
+        catchError(err => {
+          console.log(err, 'while fetching data');
+          return throwError(err);
+        })
+      )
+      .subscribe(
+        resp => {
+          console.log(resp);
+          this.store.dispatch(new SetUser(currentUserData));
+        },
+        e => {
+          console.log(e, 'while updating data');
+        },
+        () => {
+          console.log('Completed updating threater');
+        }
+      );
   }
 }
