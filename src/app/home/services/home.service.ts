@@ -9,6 +9,7 @@ import { BASE_URL, JSON_SERVER_URLS, TMDB_URLS } from 'src/app/shared/config';
 import { environment } from '../../../environments/environment';
 import { SetUser } from 'src/app/core/store/action/userDetails.action';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
+import {LogLevel, LogService} from '../.../../../shared/service/log.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +19,7 @@ export class HomeService {
   genresUrl = BASE_URL.TMDB_API + TMDB_URLS.GENRES + environment.API_KEY + '&language=en-US';
   sortPreferenceUrl = environment.JSONSERVER + JSON_SERVER_URLS.USER_DETAILS;
   genres = [];
-  constructor(private http: HttpClient, private store: Store<MovieState.State>) {}
+  constructor(private http: HttpClient, private logger: LogService, private store: Store<MovieState.State>) {}
 
   getNowshowing(page = 1) {
       this.http.get<Movie[]>(this.nowPlayingMoviesUrl + page).subscribe(
@@ -39,27 +40,6 @@ export class HomeService {
         console.error(error);
       }
     );
-
-    // this.http.get<Movie[]>(this.nowPlayingMoviesUrl + page).pipe(
-    //   map((movies: Movie[]) => {
-    //     movies['results'].forEach(element => {
-    //     console.log(JSON.parse(JSON.stringify(movies)));
-
-    //       const getCreditsUrl =
-    //         BASE_URL.TMDB_API + TMDB_URLS.GET_CREDITS + element.id + '/credits?' + environment.API_KEY;
-
-    //       this.http.get(getCreditsUrl).subscribe(res => {
-    //         element.casts = res['cast'].splice(0, 5);
-    //         element.crews = res['crew'].splice(0, 5);
-    //       });
-    //     });
-    //   }),
-      // tap((movies: Movie[]) => {
-      //   this.store.dispatch(new SetNowPlayingMovies(movies['results']));
-      //   console.log(movies);
-
-      // })
-    // );
   }
 
   getUpcomingMovies(page = 1) {
@@ -142,20 +122,19 @@ export class HomeService {
           return this.http.put(environment.JSONSERVER + JSON_SERVER_URLS.USER_DETAILS, objectRef);
         }),
         catchError(err => {
-          console.log(err, 'while fetching data');
+          this.logger.error(err, 'while fetching data');
           return throwError(err);
         })
       )
       .subscribe(
         resp => {
-          console.log(resp);
           this.store.dispatch(new SetUser(currentUserData));
         },
         e => {
-          console.log(e, 'while updating data');
+          this.logger.error(e, 'while updating data');
         },
         () => {
-          console.log('Completed updating threater');
+         this.logger.info('Successfully completed');
         }
       );
   }

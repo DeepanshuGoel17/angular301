@@ -4,12 +4,14 @@ import { TMDB_URLS, JSON_SERVER_URLS, BASE_URL } from '../../shared/config';
 import { environment } from '../../../environments/environment';
 import { concatMap, catchError } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
+import { LogService, LogLevel } from '../../shared/service/log.service';
 const SEARCH_URL = BASE_URL.TMDB_API + TMDB_URLS.SEARCH_URL;
 const THEATERS_URL = environment.JSONSERVER + JSON_SERVER_URLS.THEATER_URL;
 
 @Injectable()
 export class AdminService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private logger: LogService) {
+  }
 
   newTheater(data) {
     let newTheaters = [],
@@ -25,19 +27,19 @@ export class AdminService {
           return this.http.put(THEATERS_URL, newObject);
         }),
         catchError(err => {
-          console.log(err, 'while fetching data');
+          this.logger.error(err, 'Error in Fetching Data');
           return throwError(err);
         })
       )
       .subscribe(
         res => {
-          console.log('Sucess', res);
+          this.logger.info(JSON.stringify(res), 'Success');
         },
         e => {
-          console.log(e, 'while updating data')
+          this.logger.error(e, 'while updating data');
         },
         () => {
-          console.log('Completed adding new threater');
+          this.logger.info('Completed adding new threater');
         }
       );
   }
@@ -48,35 +50,34 @@ export class AdminService {
   saveNowPlaying(nowPlaying, theaterId) {
     let newObject;
     if (nowPlaying.length > 0) {
-
       this.http
-      .get(THEATERS_URL)
-      .pipe(
-        concatMap(value => {
-          newObject = value;
-          newObject['theaters'].forEach(theater => {
-            if (theater.id === theaterId) {
-              theater.movies = nowPlaying;
-            }
-          });
-          return this.http.put(THEATERS_URL, newObject);
-        }),
-        catchError(err => {
-          console.log(err, 'while fetching data');
-          return throwError(err);
-        })
-      )
-      .subscribe(
-        res => {
-          console.log('Sucess', res);
-        },
-        e => {
-          console.log(e, 'while updating data')
-        },
-        () => {
-          console.log('Completed updating threater');
-        }
-      );
+        .get(THEATERS_URL)
+        .pipe(
+          concatMap(value => {
+            newObject = value;
+            newObject['theaters'].forEach(theater => {
+              if (theater.id === theaterId) {
+                theater.movies = nowPlaying;
+              }
+            });
+            return this.http.put(THEATERS_URL, newObject);
+          }),
+          catchError(err => {
+            this.logger.error(err, 'while Fetching data');
+            return throwError(err);
+          })
+        )
+        .subscribe(
+          res => {
+          this.logger.info(JSON.stringify(res), 'Success');
+          },
+          e => {
+            this.logger.error(e, 'while updating data');
+          },
+          () => {
+            this.logger.info('Completed updating new threater');
+          }
+        );
     }
   }
 }

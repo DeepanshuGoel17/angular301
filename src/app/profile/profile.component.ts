@@ -61,7 +61,6 @@ export class ProfileComponent implements OnInit {
     this.loginService.getUserData().subscribe(data => (this.name = data.users[0].name));
     this.store.select(MovieState.theaterList).subscribe(result => {
       this.theaterList = Object.values(result);
-      console.log('updated', result, this.theaterList);
     });
   }
   trackThreater(index, theater) {

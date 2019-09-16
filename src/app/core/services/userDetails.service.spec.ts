@@ -20,8 +20,7 @@ beforeEach(() => {
         providers: [UserDetailService,{provide: Store, useClass: StoreMock},],
         imports: [HttpClientTestingModule]
       });
-  
-   
+
 
   });
 describe('AdminService', () => {

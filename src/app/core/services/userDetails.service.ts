@@ -11,13 +11,15 @@ import { User } from 'src/app/core/models/user.model';
 
 import { JSON_SERVER_URLS } from '../../shared/config';
 import { concatMap, catchError } from 'rxjs/operators';
+import {LogLevel, LogService} from '../../shared/service/log.service';
 
 const USERS_URL = environment.JSONSERVER + JSON_SERVER_URLS.USER_DETAILS;
 
 @Injectable()
 export class UserDetailService {
-  constructor(private http: HttpClient, private store: Store<UserState.State>) {
-    this.getUserDetailData();
+  constructor(private http: HttpClient, private logger: LogService,
+    private store: Store<UserState.State>) {
+      this.getUserDetailData();
   }
 
   authDetails;
@@ -58,7 +60,7 @@ export class UserDetailService {
         return this.http.put(USERS_URL, newObject);
       }),
       catchError(err => {
-        console.log(err, 'while fetching data');
+        this.logger.error(err, 'while fetching data');
         return throwError(err);
       })
     )
@@ -68,10 +70,10 @@ export class UserDetailService {
         this.store.dispatch(new SetUser(currentData));
       },
       e => {
-        console.log(e, 'while updating data')
+        this.logger.error(e, 'while updating data');
       },
       () => {
-        console.log('Completed updating threater');
+        this.logger.info('Completed updating threater');
       }
     );
 

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material';
 import { UserDetailService } from 'src/app/core/services/userDetails.service';
+import {LogLevel, LogService} from './shared/service/log.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,10 @@ import { UserDetailService } from 'src/app/core/services/userDetails.service';
 export class AppComponent implements OnInit {
   title = 'book-my-movie';
   constructor(private swUpdate: SwUpdate, private snackBar: MatSnackBar,
-    private userDetailsService: UserDetailService,
-    private homeService: HomeService) { }
+    private userDetailsService: UserDetailService, private logger: LogService,
+    private homeService: HomeService) {
+      this.logger.level = LogLevel.Error;
+    }
 
   ngOnInit() {
     if (this.swUpdate.isEnabled) {

@@ -85,28 +85,6 @@ describe('Reducer test', () => {
         }
         expect(result).not.toEqual(expectedResult);
     });
- /*    xit('should test setCastAndCrew', async () => {
-        let action = new SetCastAndCrew([{
-            title: 'Title',
-            id: 1,
-            popularity: 'string',
-            poster_path: 'string',
-            release_date: 'string',
-            original_language: 'hindi',
-            overview: 'overview',
-            genre_ids: 'any',
-            vote_average: 2,
-            vote_count: 2,
-        }]);
-
-        // userReducer(UserState, action);
-        const result = moviesReducer(undefined, action);
-        console.log('result',result);
-        let expectedResult = {nowPlayingMovies: {},
-        setTheaters: [],
-        upcomingMovies: {}}
-        expect(result).toEqual(expectedResult);
-    }); */
     it('should test USerReducer', async () => {
         let action = new SetTheaters([{
             title: 'Title',

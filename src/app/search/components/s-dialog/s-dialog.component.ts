@@ -54,10 +54,8 @@ export class SDialogComponent implements OnInit, OnDestroy {
     this.store.select(MovieState.nowPlayingMoviesSelector).subscribe(result => {
       this.originalMovieList = result;
       this.moviesList = result;
-      console.log(this.moviesList);
       this.movieObjArray = this.movieListService.getLanguageList(this.moviesList); // get movies with languages
-      // console.log(this.movieObjArray);
-      // this.movieObjArray = this.segregateMovies.getSortedbyLanguage(this.languageList, this.moviesList);
+      this.movieObjArray = this.segregateMovies.getSortedbyLanguage(this.languageList, this.moviesList);
     });
 
     // genre list from service
@@ -69,13 +67,12 @@ export class SDialogComponent implements OnInit, OnDestroy {
         searchList => {
           this.moviesList = searchList.results;
           this.movieObjArray = this.movieListService.getLanguageList(this.moviesList);
-          // this.movieObjArray = this.segregateMovies.getSortedbyLanguage(this.languageList, this.moviesList);
+          this.movieObjArray = this.segregateMovies.getSortedbyLanguage(this.languageList, this.moviesList);
         },
         error => {
           this.moviesList = this.searchService.searchMovieFromStore(this.originalMovieList, searchString);
           this.movieObjArray = this.movieListService.getLanguageList(this.moviesList); // get Languages
-          // console.log('error', this.movieObjArray);
-          // this.movieObjArray = this.segregateMovies.getSortedbyLanguage(this.languageList, this.moviesList);
+          this.movieObjArray = this.segregateMovies.getSortedbyLanguage(this.languageList, this.moviesList);
         }
       );
     });
@@ -100,7 +97,6 @@ export class SDialogComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy(): void {
-    // console.log('destroy');
     this.moviesList = [];
   }
 }

@@ -24,17 +24,12 @@ export class SDialogCardsComponent implements AfterContentChecked, DoCheck, OnIn
   @Input() movieSort;
   userPreference: any = [];
 
-  // movieList DS
-  // key: language.name,
-  // code: language.key,
-  // value: []
 
   constructor(private userStore: Store<UserState.State>) {}
 
   ngOnInit(): void {
     this.userStore.select(UserState.userSelector).subscribe(result => {
       this.userPreference = result.preference;
-      // console.log('uspref', this.userPreference);
     });
   }
 
