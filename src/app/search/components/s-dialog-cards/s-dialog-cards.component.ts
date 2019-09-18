@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterContentChecked, DoCheck, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, AfterContentChecked, DoCheck, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 // import { MoviePipePipe } from './../../pipes/movie-pipe.pipe';
@@ -16,19 +16,19 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./s-dialog-cards.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SDialogCardsComponent implements AfterContentChecked, DoCheck, OnInit {
+export class SDialogCardsComponent implements AfterContentChecked, DoCheck, OnInit, OnDestroy {
   @Input() movieList; // movie seperated by language
   @Input() movieFilter; // genre
   @Input() languageList; // list of languages
   @Input() selectedLanguage; // user language selection
   @Input() movieSort;
   userPreference: any = [];
-
+  subscription;
 
   constructor(private userStore: Store<UserState.State>) {}
 
   ngOnInit(): void {
-    this.userStore.select(UserState.userSelector).subscribe(result => {
+   this.subscription = this.userStore.select(UserState.userSelector).subscribe(result => {
       this.userPreference = result.preference;
     });
   }
@@ -36,4 +36,8 @@ export class SDialogCardsComponent implements AfterContentChecked, DoCheck, OnIn
   ngAfterContentChecked() {}
 
   ngDoCheck(): void {}
+
+  ngOnDestroy(): void {
+      this.subscription.unsubscribe();
+  }
 }

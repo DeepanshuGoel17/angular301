@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 // tslint:disable-next-line:max-line-length
 import { SeatReservationModalComponent } from '../../../../shared/components/modals/seat-reservation-modal/seat-reservation-modal.component';
@@ -13,14 +13,14 @@ import { PreBookingComponent } from '../../../../shared/components/modals/pre-bo
   styleUrls: ['./movie-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MovieCardComponent implements OnInit, OnChanges {
+export class MovieCardComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   movie;
   @Input()
   theaterList;
   @Input()
   category;
-
+  subscription;
   imagesPath = TMDB_URLS.IMAGE_URL;
   castCrewPath = TMDB_URLS.CAST_CREW_SMALL;
   dialogResult;
@@ -41,7 +41,7 @@ export class MovieCardComponent implements OnInit, OnChanges {
     this.selectTheater = new FormControl();
     this.selectTheater.setValue(this.theaterList[0]);
     this.selectedTheater = this.theaterList[0];
-    this.selectTheater.valueChanges.subscribe(selectedTheater => {
+   this.subscription = this.selectTheater.valueChanges.subscribe(selectedTheater => {
       this.selectedTheater = selectedTheater;
     });
   }
@@ -91,5 +91,8 @@ export class MovieCardComponent implements OnInit, OnChanges {
     } else {
       return -1;
     }
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

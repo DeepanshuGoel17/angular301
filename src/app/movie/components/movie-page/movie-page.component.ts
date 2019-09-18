@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnChanges, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { StoreFeatureModule } from '@ngrx/store';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { SeatReservationModalComponent } from '../../../shared/components/modals/seat-reservation-modal/seat-reservation-modal.component';
@@ -15,7 +15,7 @@ import { PreBookingComponent } from '../../../shared/components/modals/pre-booki
   styleUrls: ['./movie-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MoviePageComponent implements OnInit, OnChanges {
+export class MoviePageComponent implements OnInit, OnChanges, OnDestroy {
   imagesPath = TMDB_URLS.IMAGE_URL;
   castCrew = TMDB_URLS.CAST_CREW_BIG;
   @Input() movieDescription;
@@ -26,6 +26,9 @@ export class MoviePageComponent implements OnInit, OnChanges {
   date = new FormControl(this.minDate);
   selectedTheater;
   selectedDate;
+  subscription1;
+  subscription3;
+  subscription2;
   dialogResult;
   rating = new Array(5);
   selectedTime;
@@ -43,10 +46,10 @@ export class MoviePageComponent implements OnInit, OnChanges {
     this.selectTheater = new FormControl();
     this.selectTheater.setValue(this.theaterList[0]);
     this.selectedTheater = this.theaterList[0];
-    this.selectTheater.valueChanges.subscribe(selectedTheater => {
+   this.subscription1 = this.selectTheater.valueChanges.subscribe(selectedTheater => {
       this.selectedTheater = selectedTheater;
     });
-    this.date.valueChanges.subscribe((value: Date) => {
+    this.subscription2 = this.date.valueChanges.subscribe((value: Date) => {
       this.selectedDate = value.toJSON();
     });
   }
@@ -70,7 +73,7 @@ export class MoviePageComponent implements OnInit, OnChanges {
     bookingInstance.screen = this.selectedTheater.name;
     bookingInstance.time = this.selectedTime;
     bookingInstance.movieList = this.movieDescription;
-    dialogRef.afterClosed().subscribe(result => {
+    this.subscription3 = dialogRef.afterClosed().subscribe(result => {
 
     });
   }
@@ -89,5 +92,10 @@ export class MoviePageComponent implements OnInit, OnChanges {
     } else {
       return -1;
     }
+  }
+  ngOnDestroy() {
+    this.subscription1.unsubscribe();
+    this.subscription2.unsubscribe();
+    this.subscription3.unsubscribe();
   }
 }

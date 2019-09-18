@@ -1,4 +1,13 @@
-import { Component, OnInit, Input, ViewChild, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  TemplateRef,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  OnDestroy
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { theaterList } from 'src/app/reducers';
 import { AdminService } from '../../services/admin.service';
@@ -10,25 +19,24 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./change-show.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChangeShowComponent implements OnInit {
+export class ChangeShowComponent implements OnInit, OnDestroy {
   @Input() theaterList;
   movieInput: FormControl;
   selectTheater: FormControl;
   movieResult;
+  private subscription;
   selectedTheater;
   nowShowing = [];
   nowPlaying = [];
   @ViewChild('successDialog') successDialog: TemplateRef<any>;
 
-  constructor(private adminService: AdminService,
-     private cd: ChangeDetectorRef,
-     private matDialog: MatDialog) {
+  constructor(private adminService: AdminService, private cd: ChangeDetectorRef, private matDialog: MatDialog) {
     this.movieInput = new FormControl();
     this.selectTheater = new FormControl();
   }
 
   ngOnInit() {
-    this.movieInput.valueChanges.subscribe(value => {
+    this.subscription = this.movieInput.valueChanges.subscribe(value => {
       if (value) {
         this.movieResult = this.adminService.searchMovie(value);
       }
@@ -70,5 +78,8 @@ export class ChangeShowComponent implements OnInit {
     this.selectTheater.reset();
     this.matDialog.closeAll();
     this.movieResult = [];
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

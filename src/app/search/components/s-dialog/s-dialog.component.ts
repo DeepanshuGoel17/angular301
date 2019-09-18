@@ -37,6 +37,7 @@ export class SDialogComponent implements OnInit, OnDestroy {
     value: ''
   };
   movieSortObj = 'NO';
+  subscription;
   movieObjArray = []; // movie seperated by language
 
   searchField = new FormControl();
@@ -51,7 +52,7 @@ export class SDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // movie from store
-    this.store.select(MovieState.nowPlayingMoviesSelector).subscribe(result => {
+   this.subscription = this.store.select(MovieState.nowPlayingMoviesSelector).subscribe(result => {
       this.originalMovieList = result;
       this.moviesList = result;
       this.languageList = this.movieListService.getLanguageList(this.moviesList); // get movies with languages
@@ -98,5 +99,6 @@ export class SDialogComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.moviesList = [];
+      this.subscription.unsubscribe();
   }
 }
