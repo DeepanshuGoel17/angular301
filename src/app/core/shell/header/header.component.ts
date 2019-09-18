@@ -80,7 +80,7 @@ export class HeaderComponent implements OnInit {
         });
       })
       .catch(err => {
-        this.uiService.showMessage('Oh gosh, SOMETHING WENT WRONG !!!!', '', 3000);
+        // this.uiService.showMessage('Oh gosh, SOMETHING WENT WRONG !!!!', '', 3000);
       });
   }
 

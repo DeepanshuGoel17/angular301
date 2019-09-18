@@ -6,7 +6,6 @@ import { Action } from 'rxjs/internal/scheduler/Action';
 import { RemoveUser, SetUser } from '../action/userDetails.action';
 
 describe('Reducer test', () => {
-    let service;
 
     beforeEach(() => {
 
@@ -15,9 +14,9 @@ describe('Reducer test', () => {
 
     });
     it('should test USerReducer', async () => {
-        let action = new RemoveUser();
-      
-        let userStateforRemove = {
+        const action = new RemoveUser();
+
+        const userStateforRemove = {
             user: {
                 id: 'id',
                 name: 'User',
@@ -37,7 +36,8 @@ describe('Reducer test', () => {
 
             }
         };
-        let UserState = {
+        // tslint:disable-next-line: no-shadowed-variable
+        const UserState = {
             user: {
                 id: '',
                 name: '',
@@ -61,7 +61,7 @@ describe('Reducer test', () => {
         expect(result).toEqual(UserState);
     });
     it('should test USerReducer', async () => {
-        let userData ={
+        const userData = {
             'id': 'id',
             'name': 'name',
             'email': 'email',
@@ -78,9 +78,9 @@ describe('Reducer test', () => {
                 'movieId': 'string',
                 'rating': 'string',
             },
-        }
-        let action = new SetUser(userData);
-        let userStateforRemove = {
+        };
+        const action = new SetUser(userData);
+        const userStateforRemove = {
             user: {
                 id: 'id',
                 name: 'User',
@@ -107,5 +107,5 @@ describe('Reducer test', () => {
     };
         expect(result).toEqual(expectedResult);
     });
-   
+
 });

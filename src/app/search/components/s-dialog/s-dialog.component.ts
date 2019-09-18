@@ -54,7 +54,7 @@ export class SDialogComponent implements OnInit, OnDestroy {
     this.store.select(MovieState.nowPlayingMoviesSelector).subscribe(result => {
       this.originalMovieList = result;
       this.moviesList = result;
-      this.movieObjArray = this.movieListService.getLanguageList(this.moviesList); // get movies with languages
+      this.languageList = this.movieListService.getLanguageList(this.moviesList); // get movies with languages
       this.movieObjArray = this.segregateMovies.getSortedbyLanguage(this.languageList, this.moviesList);
     });
 
@@ -66,12 +66,12 @@ export class SDialogComponent implements OnInit, OnDestroy {
       this.searchService.getMovies(searchString).subscribe(
         searchList => {
           this.moviesList = searchList.results;
-          this.movieObjArray = this.movieListService.getLanguageList(this.moviesList);
+          this.languageList = this.movieListService.getLanguageList(this.moviesList);
           this.movieObjArray = this.segregateMovies.getSortedbyLanguage(this.languageList, this.moviesList);
         },
         error => {
           this.moviesList = this.searchService.searchMovieFromStore(this.originalMovieList, searchString);
-          this.movieObjArray = this.movieListService.getLanguageList(this.moviesList); // get Languages
+          this.languageList = this.movieListService.getLanguageList(this.moviesList); // get Languages
           this.movieObjArray = this.segregateMovies.getSortedbyLanguage(this.languageList, this.moviesList);
         }
       );

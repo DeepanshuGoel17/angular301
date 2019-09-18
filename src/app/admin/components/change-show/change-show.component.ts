@@ -21,7 +21,7 @@ export class ChangeShowComponent implements OnInit {
   @ViewChild('successDialog') successDialog: TemplateRef<any>;
 
   constructor(private adminService: AdminService,
-     private cd: ChangeDetectorRef, 
+     private cd: ChangeDetectorRef,
      private matDialog: MatDialog) {
     this.movieInput = new FormControl();
     this.selectTheater = new FormControl();
@@ -30,7 +30,7 @@ export class ChangeShowComponent implements OnInit {
   ngOnInit() {
     this.movieInput.valueChanges.subscribe(value => {
       if (value) {
-        this.movieResult = this.adminService.searchMovie(value)
+        this.movieResult = this.adminService.searchMovie(value);
       }
     });
     this.selectTheater.valueChanges.subscribe(value => {

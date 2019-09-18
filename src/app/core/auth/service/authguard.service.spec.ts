@@ -9,27 +9,27 @@ class MockRouter {
     navigate(path) {}
 }
   @Injectable()
-class StoreMock { 
+class StoreMock {
     // How we did it before
-    select =  jasmine.createSpy().and.returnValue(of('quote')); 
+    select =  jasmine.createSpy().and.returnValue(of('quote'));
     dispatch = jasmine.createSpy();
   }
 
-  
+
 describe('AuthGuard', () => {
     describe('canActivate', () => {
       let authGuard: AuthGuard;
       let authService;
       let router;
       let state;
-  
+
       it('should return true for a logged in user', () => {
         authService = { isLoggedIn: () => true };
         router = new MockRouter();
         state = new StoreMock();
         authGuard = new AuthGuard(router, state);
-        
-  
+
+
         expect(authGuard.canActivate(router, state)).toEqual(true);
       });
 
@@ -38,8 +38,8 @@ describe('AuthGuard', () => {
         router = new MockRouter();
         state = new StoreMock();
         authGuard = new AuthGuard(router, state);
-        
-  
+
+
         expect(authGuard.canLoad(state)).toEqual(true);
       });
     });

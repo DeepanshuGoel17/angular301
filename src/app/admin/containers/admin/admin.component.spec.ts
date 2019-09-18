@@ -19,13 +19,13 @@ import { of } from 'rxjs';
 
 @Injectable()
 class MockAdminService {
-    newTheater(newTheater){}
+    newTheater(newTheater) {}
  }
 
 @Injectable()
-class StoreMock { 
+class StoreMock {
     // How we did it before
-    select =  jasmine.createSpy().and.returnValue(of('quote')); 
+    select =  jasmine.createSpy().and.returnValue(of('quote'));
     dispatch = jasmine.createSpy();
   }
 
@@ -35,7 +35,7 @@ describe('AdminComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-        imports:[MatDialogModule],
+        imports: [MatDialogModule],
       declarations: [
         AdminComponent
       ],
@@ -54,13 +54,13 @@ describe('AdminComponent', () => {
   });
 
   it('should run #ngOnInit()', async () => {
-    spyOn(component,'ngOnInit');
+    spyOn(component, 'ngOnInit');
     const result = component.ngOnInit();
     expect(component.ngOnInit).toHaveBeenCalled();
   });
 
   it('should run #addTheater()', async () => {
-    spyOn(component,'addTheater');
+    spyOn(component, 'addTheater');
     const result = component.addTheater('formData');
     expect(component.addTheater).toHaveBeenCalled();
   });

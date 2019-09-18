@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
         });
       });
     }
-    // this.homeService.getNowshowing();
+    this.homeService.getNowshowing();
     this.homeService.getTheaterList();
     this.homeService.fetchGenres();
   }

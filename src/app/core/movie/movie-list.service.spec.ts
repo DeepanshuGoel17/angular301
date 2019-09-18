@@ -6,19 +6,19 @@ describe('MovieListService', () => {
 
   const httpClient: any = {
     // mock properties here
-  }
+  };
 
   beforeEach(() => {
     service = new MovieListService(httpClient);
   });
 
   it('should run #getLanguageList()', async () => {
-  let  movieList = [ {
+  const  movieList = [ {
     original_language: 'hi'
-  },{
+  }, {
       original_language: 'hi'
   }
-  ]
+  ];
     const result = service.getLanguageList(movieList);
   });
 

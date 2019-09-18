@@ -9,15 +9,14 @@ export class SegregateMovieService {
 
   getSortedbyLanguage(languageList, moviesList) {
     const mlist = [];
-
-    for (const language of languageList) {
+   for (const language of languageList) {
       const movieobj = {
-        key: language.name,
-        code: language.key,
+        key: language.key,
+        code: language.code,
         value: []
       };
       for (const movie of moviesList) {
-        if (movie.original_language === language.key) {
+        if (movie.original_language === language.code) {
           movieobj.value.push(movie);
         }
       }

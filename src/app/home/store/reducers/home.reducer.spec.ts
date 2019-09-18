@@ -1,7 +1,7 @@
 import { async } from '@angular/core/testing';
 import { Directive } from '@angular/core';
 import { Action } from 'rxjs/internal/scheduler/Action';
-import { MovieActionTypes, EMovieActionTypes, SetNowPlayingMovies, SetUpcomingMovies, SetCastAndCrew, SetTheaters } from '../actions/home.action';
+import { SetNowPlayingMovies, SetUpcomingMovies, SetCastAndCrew, SetTheaters } from '../actions/home.action';
 import { Movie } from '../../models/movie.model';
 import { State } from '@ngrx/store';
 import { Theater } from '../../models/theater.model';
@@ -12,12 +12,11 @@ import { } from './home.reducer';
 
 
 describe('Reducer test', () => {
-    let service;
 
     beforeEach(() => {
     });
     it('should test nowplaying', async () => {
-        let action = new SetNowPlayingMovies([{
+        const action = new SetNowPlayingMovies([{
             title: 'Title',
             id: 1,
             popularity: 'string',
@@ -32,7 +31,7 @@ describe('Reducer test', () => {
 
         // userReducer(UserState, action);
         const result = moviesReducer(undefined, action);
-        let expectedResult = {
+        const expectedResult = {
             nowPlayingMovies: [{
                 title: 'Title',
                 id: 1,
@@ -47,12 +46,12 @@ describe('Reducer test', () => {
             }],
             upcomingMovies: [],
             setTheaters: [],
-        }
+        };
 
         expect(result).toEqual(expectedResult);
     });
     it('should test setUpcoming', async () => {
-        let action = new SetUpcomingMovies([{
+        const action = new SetUpcomingMovies([{
             title: 'TitleMindtree',
             id: 1,
             popularity: 'string',
@@ -67,7 +66,7 @@ describe('Reducer test', () => {
 
         // userReducer(UserState, action);
         const result = moviesReducer(undefined, action);
-        let expectedResult = {
+        const expectedResult = {
             nowPlayingMovies: [],
             upcomingMovies: [{
                 title: 'Title',
@@ -82,11 +81,11 @@ describe('Reducer test', () => {
                 vote_count: 2,
             }],
             setTheaters: [],
-        }
+        };
         expect(result).not.toEqual(expectedResult);
     });
     it('should test USerReducer', async () => {
-        let action = new SetTheaters([{
+        const action = new SetTheaters([{
             title: 'Title',
             id: 1,
             popularity: 'string',

@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Injectable, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from '../../../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // import { Observable } from 'rxjs/Observable';
@@ -13,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, Directive } from '@angular/core';
 import { MovieCardComponent } from './movie-card.component';
 import { MatDialog } from '@angular/material';
+import {MaterialModule} from '../../../../shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeRoutingModule } from 'src/app/home/home-routing.module';

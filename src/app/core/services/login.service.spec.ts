@@ -1,5 +1,5 @@
 import { async } from '@angular/core/testing';
-import {LoginService} from './login.service'; 
+import {LoginService} from './login.service';
 import { TestBed } from '@angular/core/testing';
 import { TMDB_URLS, JSON_SERVER_URLS, BASE_URL } from '../../shared/config';
 import { environment } from '../../../environments/environment';
@@ -11,19 +11,19 @@ beforeEach(() => {
         providers: [LoginService],
         imports: [HttpClientTestingModule]
       });
-  
-   
+
+
 
   });
 describe('AdminService', () => {
- 
+
     function setup() {
         const sharedService = TestBed.get(LoginService);
         const httpTestingController = TestBed.get(HttpTestingController);
         return { sharedService, httpTestingController };
       }
 
-  
+
   it('should run #getUserData()', async () => {
     const { sharedService, httpTestingController } = setup();
     const userData = {};

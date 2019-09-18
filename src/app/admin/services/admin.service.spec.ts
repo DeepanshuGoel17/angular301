@@ -1,5 +1,5 @@
 import { async } from '@angular/core/testing';
-import {AdminService} from './admin.service'; 
+import {AdminService} from './admin.service';
 import { TestBed } from '@angular/core/testing';
 import { TMDB_URLS, JSON_SERVER_URLS, BASE_URL } from '../../shared/config';
 import { environment } from '../../../environments/environment';
@@ -11,12 +11,12 @@ beforeEach(() => {
         providers: [AdminService],
         imports: [HttpClientTestingModule]
       });
-  
-   
+
+
 
   });
 describe('AdminService', () => {
- 
+
     function setup() {
         const sharedService = TestBed.get(AdminService);
         const httpTestingController = TestBed.get(HttpTestingController);
@@ -33,17 +33,17 @@ describe('AdminService', () => {
     expect(req.request.method).toBe('GET');
 
     req.flush({
-      theaters:['Laxmi complex']
+      theaters: ['Laxmi complex']
     });
-    const reqPut= httpTestingController.expectOne(THEATERS_URL);
+    const reqPut = httpTestingController.expectOne(THEATERS_URL);
 
     expect(reqPut.request.method).toBe('PUT');
 
     reqPut.flush({
-      theaters:['Laxmi complex']
+      theaters: ['Laxmi complex']
     });
-  
-  
+
+
   });
 
   it('should run #newTheater() error case 1', async () => {
@@ -57,8 +57,8 @@ describe('AdminService', () => {
     expect(req.request.method).toBe('GET');
 
     req.flush(  data, mockErrorResponse);
- 
-  
+
+
   });
   it('should run #newTheater() error case 2', async () => {
     const { sharedService, httpTestingController } = setup();
@@ -71,17 +71,17 @@ describe('AdminService', () => {
     expect(req.request.method).toBe('GET');
 
     req.flush({
-        theaters:['Laxmi complex']
+        theaters: ['Laxmi complex']
       });
-    const reqPut= httpTestingController.expectOne(THEATERS_URL);
+    const reqPut = httpTestingController.expectOne(THEATERS_URL);
 
     expect(reqPut.request.method).toBe('PUT');
 
     reqPut.flush(
         data, mockErrorResponse
     );
-  
-  
+
+
   });
   it('should run #searchMovie()', async () => {
     const SEARCH_URL = BASE_URL.TMDB_API + TMDB_URLS.SEARCH_URL;
@@ -101,27 +101,27 @@ describe('AdminService', () => {
   });
 
   it('should run #saveNowPlaying()', async () => {
-      let nowPlaying= [1];
-      let theaterId = '123';
+      const nowPlaying = [1];
+      const theaterId = '123';
       const { sharedService, httpTestingController } = setup();
-      sharedService.saveNowPlaying(nowPlaying,theaterId);
+      sharedService.saveNowPlaying(nowPlaying, theaterId);
       const THEATERS_URL = environment.JSONSERVER + JSON_SERVER_URLS.THEATER_URL;
       const req = httpTestingController.expectOne(THEATERS_URL);
-  
+
       expect(req.request.method).toBe('GET');
-  
+
       req.flush({
-        theaters:[{id:'123'}]
+        theaters: [{id: '123'}]
       });
-      const reqPut= httpTestingController.expectOne(THEATERS_URL);
-  
+      const reqPut = httpTestingController.expectOne(THEATERS_URL);
+
       expect(reqPut.request.method).toBe('PUT');
-  
+
       reqPut.flush({
-        theaters:['Laxmi complex']
+        theaters: ['Laxmi complex']
       });
-    
-    
+
+
   });
 
   afterEach(() => {
